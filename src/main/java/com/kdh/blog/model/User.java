@@ -6,7 +6,9 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.sql.Timestamp;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,6 +22,7 @@ public class User {
     @Column(nullable = false, unique = true)
     private String username;
 
+    @Size(min=9, max=20)
     @Column(nullable = false)
     private String password;
 

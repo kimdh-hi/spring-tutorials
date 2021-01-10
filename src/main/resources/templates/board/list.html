@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head th:replace="fragments/head :: head('게시판 목록')"></head>
+<body>
+    <nav th:replace="fragments/common :: menu('board')"></nav>
+    <div class="starter-template text-center py-5 px-3">
+        <h1>게시판</h1>
+        <div class="text-start">총 건수 : <span th:text="${boardList.size()}"></span> 건</div>
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <td>번호</td>
+                <td>제목</td>
+                <td>작성일자</td>
+            </tr>
+        </thead>    
+        <tbody>
+            <tr th:each="board : ${boardList}">
+                <td th:text=${board.id}></td>
+                <td><a th:text="${board.title}" th:href="@{/board/form/(id=${board.id})}"></a></td>
+                <td th:text=${board.createTime}></td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="text-end">
+        <a type="button" class="btn btn-primary" th:href="@{/board/form}">글쓰기</a>
+    </div>
+    </div>
+</body>
+</html>

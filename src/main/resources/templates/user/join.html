@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head th:replace="fragments/head :: head('회원가입')"></head>
+<body>
+    <nav th:replace="fragments/common :: menu('join')"></nav>
+
+    <main class="container">
+        <form th:action="@{/user/join}" method=post th:object="${user}">
+            <div class="mb-3">
+              <label for="username" class="form-label">Username</label>
+              <input type="text" class="form-control" id="username" aria-describedby="username" th:field="*{username}">
+            </div>
+            <div class="mb-3">
+              <label for="password" class="form-label">Password</label>
+              <input type="password" class="form-control" id="password" th:field="*{password}"
+                th:classappend="${#fields.hasErrors('password')} ? 'is-invalid'">
+                <div th:if="${#fields.hasErrors('password')}" id="validationServerUsernameFeedback" class="invalid-feedback">
+                    Please choose a username.
+                </div>
+            </div>
+              <select class="form-select" aria-label="Default select example">
+                <option value="USER" selected>USER</option>
+                <option value="ADMIN">ADMIN</option>
+              </select>
+            <div class="mb-3 form-check">
+              <input type="checkbox" class="form-check-input" id="exampleCheck1">
+              <label class="form-check-label" for="exampleCheck1">Check me out</label>
+            </div>
+            <button type="submit" class="btn btn-primary">가입</button>
+        </form>
+    </main><!-- /.container --> 
+</body>
+</html>
