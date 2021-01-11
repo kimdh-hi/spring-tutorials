@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 import java.sql.Timestamp;
 import java.util.List;
@@ -22,12 +23,15 @@ public class User {
     @Column(nullable = false, unique = true)
     private String username;
 
-    @Size(min=9, max=20)
+    @Size(min=8, max=15, message = "비밀번호는 8자 이상, 15자 이하 입니다.")
     @Column(nullable = false)
     private String password;
 
 //    @Enumerated(EnumType.STRING)
 //    private UserType userType;
+
+    @Email
+    private String email;
 
     @CreationTimestamp
     private Timestamp createTime;

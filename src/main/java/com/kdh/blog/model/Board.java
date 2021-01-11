@@ -14,8 +14,6 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@DynamicInsert
-@DynamicUpdate
 @Entity
 public class Board {
 

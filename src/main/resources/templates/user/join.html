@@ -6,22 +6,41 @@
 
     <main class="container">
         <form th:action="@{/user/join}" method=post th:object="${user}">
+            <!-- username -->
             <div class="mb-3">
               <label for="username" class="form-label">Username</label>
               <input type="text" class="form-control" id="username" aria-describedby="username" th:field="*{username}">
             </div>
+
+            <!-- password -->
             <div class="mb-3">
               <label for="password" class="form-label">Password</label>
               <input type="password" class="form-control" id="password" th:field="*{password}"
                 th:classappend="${#fields.hasErrors('password')} ? 'is-invalid'">
-                <div th:if="${#fields.hasErrors('password')}" id="validationServerUsernameFeedback" class="invalid-feedback">
-                    Please choose a username.
+                <div th:if="${#fields.hasErrors('password')}" id="validationServerPasswordFeedback" class="invalid-feedback">
+                    비밀번호는 8자 이상, 15자 이하 입니다.
                 </div>
             </div>
+
+            <!-- Email -->
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" th:field="*{email}"
+                       th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'">
+                <div th:if="${#fields.hasErrors('email')}" id="validationServerEmailFeedback" class="invalid-feedback text-start">
+
+                </div>
+            </div>
+
+            <!-- UserType -->
+            <div class="mb-3">
+                <label for="usertype" class="form-label">UserType</label>
               <select class="form-select" aria-label="Default select example">
                 <option value="USER" selected>USER</option>
                 <option value="ADMIN">ADMIN</option>
               </select>
+            </div>
+
             <div class="mb-3 form-check">
               <input type="checkbox" class="form-check-input" id="exampleCheck1">
               <label class="form-check-label" for="exampleCheck1">Check me out</label>

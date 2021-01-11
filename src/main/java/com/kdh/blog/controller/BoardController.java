@@ -5,6 +5,10 @@ import com.kdh.blog.model.User;
 import com.kdh.blog.repository.BoardRepository;
 import com.kdh.blog.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -30,8 +34,13 @@ public class BoardController {
     private HttpSession httpSession;
 
     @GetMapping("/list")
-    public String board(Model model) {
-        List<Board> boardList = boardRepository.findAll();
+    public String board(Model model, @PageableDefault(size=2) Pageable pageable) {
+        Page<Board> boardList = boardRepository.findAll(pageable);
+        int startPage = Math.max(1, boardList.getPageable().getPageNumber() - 4);
+        int endPage = Math.min(boardList.getTotalPages(), boardList.getPageable().getPageNumber() + 4);
+
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
         model.addAttribute("boardList", boardList);
         return "board/list";
     }

@@ -3,9 +3,10 @@
 <head th:replace="fragments/head :: head('게시판 목록')"></head>
 <body>
     <nav th:replace="fragments/common :: menu('board')"></nav>
+    <div class="container">
     <div class="starter-template text-center py-5 px-3">
         <h1>게시판</h1>
-        <div class="text-start">총 건수 : <span th:text="${boardList.size()}"></span> 건</div>
+        <div class="text-start">총 건수 : <span th:text="${boardList.totalElements}"></span> 건</div>
     <table class="table table-striped table-hover">
         <thead>
             <tr>
@@ -22,6 +23,24 @@
             </tr>
         </tbody>
     </table>
+
+    <!-- Pagination -->
+    <nav aria-label="Page navigation example" >
+        <ul class="pagination justify-content-center">
+          <li class="page-item" th:classappend="${1 == boardList.pageable.pageNumber + 1} ? 'disabled'">
+              <a class="page-link" href="#" th:href="@{/board/list(page=${boardList.pageable.pageNumber - 1})}">Previous</a>
+            </li>
+          <li class="page-item" th:each="i : ${#numbers.sequence(startPage,endPage)}" th:classappend="${i == boardList.pageable.pageNumber + 1} ? 'disabled'">
+              <a class="page-link" th:text="${i}" href="#" th:href="@{/board/list(page=${i- 1})}">i</a>
+        </li>
+          <li class="page-item" th:classappend="${boardList.pageable.pageNumber + 1 == boardList.totalPages} ? 'disabled'" >
+              <a class="page-link" href="#" th:href="@{/board/list(page=${boardList.pageable.pageNumber + 1})}">Next</a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+
     <div class="text-end">
         <a type="button" class="btn btn-primary" th:href="@{/board/form}">글쓰기</a>
     </div>
