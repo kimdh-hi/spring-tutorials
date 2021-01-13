@@ -34,7 +34,7 @@ public class BoardController {
     private HttpSession httpSession;
 
     @GetMapping("/list")
-    public String board(Model model, @PageableDefault(size=2) Pageable pageable,
+    public String board(Model model, @PageableDefault(size=4) Pageable pageable,
                         @RequestParam(required = false, defaultValue = "") String searchText) {
         //Page<Board> boardList = boardRepository.findAll(pageable);
         Page<Board> boardList = boardRepository.findByTitleContainingOrContentsContaining(searchText, searchText, pageable);

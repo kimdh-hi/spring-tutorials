@@ -5,7 +5,7 @@
     <nav th:replace="fragments/common :: menu('board')"></nav>
     <div class="container">
     <div class="starter-template text-center py-5 px-3">
-        <a th:href="@{/board/list}"><h1>게시판</h1></a>
+    <h1>게시판</h1>
 
     <div>
         <!-- 총 건수 -->
@@ -14,7 +14,7 @@
         <!-- 검색 -->
         <form th:action="@{/board/list}" method="GET" class="row g-3 d-flex justify-content-end">
             <div class="col-auto">
-              <input type="text" class="form-control" id="searchText" name="searchText">
+              <input type="text" class="form-control" id="searchText" name="searchText" th:value="${param.searchText}">
             </div>
             <div class="col-auto">
               <button type="submit" class="btn btn-light mb-3">검색</button>
@@ -44,13 +44,13 @@
     <nav aria-label="Page navigation example" >
         <ul class="pagination justify-content-center">
           <li class="page-item" th:classappend="${1 == boardList.pageable.pageNumber + 1} ? 'disabled'">
-              <a class="page-link" href="#" th:href="@{/board/list(page=${boardList.pageable.pageNumber - 1})}">Previous</a>
+              <a class="page-link" href="#" th:href="@{/board/list(page=${boardList.pageable.pageNumber - 1}, searchText=${param.searchText})}">Previous</a>
             </li>
           <li class="page-item" th:each="i : ${#numbers.sequence(startPage,endPage)}" th:classappend="${i == boardList.pageable.pageNumber + 1} ? 'disabled'">
-              <a class="page-link" th:text="${i}" href="#" th:href="@{/board/list(page=${i- 1})}">i</a>
+              <a class="page-link" th:text="${i}" href="#" th:href="@{/board/list(page=${i- 1}, searchText=${param.searchText})}">i</a>
         </li>
           <li class="page-item" th:classappend="${boardList.pageable.pageNumber + 1 == boardList.totalPages} ? 'disabled'" >
-              <a class="page-link" href="#" th:href="@{/board/list(page=${boardList.pageable.pageNumber + 1})}">Next</a>
+              <a class="page-link" href="#" th:href="@{/board/list(page=${boardList.pageable.pageNumber + 1}, searchText=${param.searchText})}">Next</a>
             </li>
         </ul>
     </nav>
