@@ -12,7 +12,15 @@
         <div class="d-flex justify-content-start">총 건수 :  <span th:text="${boardList.totalElements}"></span> 건</div>
         
         <!-- 검색 -->
+        <!-- 검색시 검색타입이 유지가 안됨-->
         <form th:action="@{/board/list}" method="GET" class="row g-3 d-flex justify-content-end">
+            <div class="col-auto row-auto">
+            <select class="selectpicker" aria-label="Default select example" id="searchType" name="searchType" th:value="${param.searchType}">
+                <option value="titleContents">제목+내용</option>
+                <option value="title">제목만</option>
+                <option value="contents">내용만</option>
+            </select>
+            </div>
             <div class="col-auto">
               <input type="text" class="form-control" id="searchText" name="searchText" th:value="${param.searchText}">
             </div>
@@ -20,7 +28,7 @@
               <button type="submit" class="btn btn-light mb-3">검색</button>
             </div>
         </form>
-    </div>
+
 
     <!-- 게시글 작성 폼 테이블 -->        
     <table class="table table-striped table-hover">
@@ -44,13 +52,13 @@
     <nav aria-label="Page navigation example" >
         <ul class="pagination justify-content-center">
           <li class="page-item" th:classappend="${1 == boardList.pageable.pageNumber + 1} ? 'disabled'">
-              <a class="page-link" href="#" th:href="@{/board/list(page=${boardList.pageable.pageNumber - 1}, searchText=${param.searchText})}">Previous</a>
+              <a class="page-link" href="#" th:href="@{/board/list(page=${boardList.pageable.pageNumber - 1}, searchText=${param.searchText}, searchType=${param.searchType})}">Previous</a>
             </li>
           <li class="page-item" th:each="i : ${#numbers.sequence(startPage,endPage)}" th:classappend="${i == boardList.pageable.pageNumber + 1} ? 'disabled'">
-              <a class="page-link" th:text="${i}" href="#" th:href="@{/board/list(page=${i- 1}, searchText=${param.searchText})}">i</a>
+              <a class="page-link" th:text="${i}" href="#" th:href="@{/board/list(page=${i- 1}, searchText=${param.searchText}, searchType=${param.searchType})}">i</a>
         </li>
           <li class="page-item" th:classappend="${boardList.pageable.pageNumber + 1 == boardList.totalPages} ? 'disabled'" >
-              <a class="page-link" href="#" th:href="@{/board/list(page=${boardList.pageable.pageNumber + 1}, searchText=${param.searchText})}">Next</a>
+              <a class="page-link" href="#" th:href="@{/board/list(page=${boardList.pageable.pageNumber + 1}, searchText=${param.searchText}, searchType=${param.searchType})}">Next</a>
             </li>
         </ul>
     </nav>
