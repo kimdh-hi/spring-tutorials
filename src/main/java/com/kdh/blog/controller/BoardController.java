@@ -34,8 +34,10 @@ public class BoardController {
     private HttpSession httpSession;
 
     @GetMapping("/list")
-    public String board(Model model, @PageableDefault(size=2) Pageable pageable) {
-        Page<Board> boardList = boardRepository.findAll(pageable);
+    public String board(Model model, @PageableDefault(size=2) Pageable pageable,
+                        @RequestParam(required = false, defaultValue = "") String searchText) {
+        //Page<Board> boardList = boardRepository.findAll(pageable);
+        Page<Board> boardList = boardRepository.findByTitleContainingOrContentsContaining(searchText, searchText, pageable);
         int startPage = Math.max(1, boardList.getPageable().getPageNumber() - 4);
         int endPage = Math.min(boardList.getTotalPages(), boardList.getPageable().getPageNumber() + 4);
 
